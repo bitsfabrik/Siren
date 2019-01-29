@@ -270,7 +270,7 @@ private extension Siren {
                          object: nil,
                          queue: nil) { [weak self] _ in
                             guard let self = self else { return }
-                            self.presentationManager.alertController?.dismiss(animated: true, completion: nil)
+                            self.presentationManager.alertController?.hide(window: self.presentationManager.updaterWindow, animated: true)
         }
     }
 }

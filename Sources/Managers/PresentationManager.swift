@@ -38,7 +38,7 @@ public struct PresentationManager {
     var alertController: UIAlertController?
 
     /// The `UIWindow` instance that presents the `SirenViewController`.
-    private var updaterWindow: UIWindow = {
+    private(set) var updaterWindow: UIWindow = {
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = SirenViewController()
         window.windowLevel = UIWindow.Level.alert + 1
@@ -219,7 +219,6 @@ extension PresentationManager {
 
     /// Removes the `alertController` from memory.
     private func cleanUpAlertController() {
-        alertController?.hide(window: self.updaterWindow)
-        alertController?.dismiss(animated: false, completion: nil)
+        alertController?.hide(window: self.updaterWindow, animated: false)
     }
 }

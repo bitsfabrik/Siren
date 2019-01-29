@@ -22,7 +22,15 @@ extension UIAlertController {
     /// Hides Siren's `UIAlertController` within a given window.
     ///
     /// - Parameter window: The `UIWindow` that references Siren's `UIAlertController`.
-    func hide(window: UIWindow) {
-        window.isHidden = true
+    func hide(window: UIWindow, animated: Bool = true) {
+        if animated {
+            self.dismiss(animated: animated) {
+                window.isHidden = true
+            }
+        } else {
+            window.isHidden = true
+            self.dismiss(animated: false, completion: nil)
+        }
+
     }
 }
