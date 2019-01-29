@@ -91,7 +91,11 @@ public extension Siren {
             }
         }
     }
-    
+}
+
+// MARK: - Version Check and Alert Presentation Flow
+
+private extension Siren {
     /// Initiates the unidirectional version checking flow.
     func performVersionCheck() {
         alertPresentationDate = UserDefaults.alertPresentationDate
@@ -105,11 +109,7 @@ public extension Siren {
             self.validate(model: lookupModel)
         }
     }
-}
 
-// MARK: - Version Check and Alert Presentation Flow
-
-private extension Siren {
     /// Validates the parsed and mapped iTunes Lookup Model
     /// to guarantee all the relevant data was returned before
     /// attempting to present an alert.
