@@ -40,6 +40,12 @@ public final class Siren: NSObject {
     /// The current installed version of your app.
     lazy var currentInstalledVersion: String? = Bundle.version()
 
+    public var checkAtDidBecomeActive: Bool = true {
+        didSet {
+            updateForegroundObserver()
+        }
+    }
+    
     /// The retained `NotificationCenter` observer that listens for `UIApplication.didBecomeActiveNotification` notifications.
     var didBecomeActiveObserver: NSObjectProtocol?
 
@@ -224,13 +230,21 @@ private extension Siren {
 private extension Siren {
     /// Add app state observers
     func addObservers() {
-        addForegroundObserver()
+        updateForegroundObserver()
         addBackgroundObserver()
+    }
+    
+    func updateForegroundObserver() {
+        if checkAtDidBecomeActive {
+            addForegroundObserver()
+        } else {
+            removeForegroundObserver()
+        }
     }
 
     /// Adds an observer that listens for app launching/relaunching.
     func addForegroundObserver() {
-        guard didBecomeActiveObserver == nil else { return }
+        guard didBecomeActiveObserver == nil, checkAtDidBecomeActive else { return }
         didBecomeActiveObserver = NotificationCenter
             .default
             .addObserver(forName: UIApplication.didBecomeActiveNotification,
@@ -239,6 +253,12 @@ private extension Siren {
                             guard let self = self else { return }
                             self.performVersionCheck()
         }
+    }
+    
+    func removeForegroundObserver() {
+        guard didBecomeActiveObserver != nil, !checkAtDidBecomeActive else { return }
+        NotificationCenter.default.removeObserver(self.didBecomeActiveObserver)
+        self.didBecomeActiveObserver = nil
     }
 
     /// Adds an observer that listens for when the app is sent to the background.
