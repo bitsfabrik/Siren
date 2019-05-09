@@ -2,7 +2,7 @@
 
 ### Notify users when a new version of your app is available and prompt them to upgrade.
 
-[![Travis CI Status](https://travis-ci.org/ArtSabintsev/Siren.svg?branch=master)](https://travis-ci.org/ArtSabintsev/Siren) ![Documentation](https://github.com/ArtSabintsev/Siren/blob/master/docs/badge.svg) ![Swift Support](https://img.shields.io/badge/Swift-4.2%2C%204.1%2C%203.2%2C%203.1%202.3-orange.svg) [![CocoaPods](https://img.shields.io/cocoapods/v/Siren.svg)](https://cocoapods.org/pods/Siren)  [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![SwiftPM Compatible](https://img.shields.io/badge/SwiftPM-compatible-brightgreen.svg)](https://swift.org/package-manager/)
+[![Travis CI Status](https://travis-ci.org/ArtSabintsev/Siren.svg?branch=master)](https://travis-ci.org/ArtSabintsev/Siren) ![Documentation](https://github.com/ArtSabintsev/Siren/blob/master/docs/badge.svg) ![Swift Support](https://img.shields.io/badge/Swift-5.0%2C%204.2%2C%204.1%2C%203.2%2C%203.1%202.3-orange.svg) [![CocoaPods](https://img.shields.io/cocoapods/v/Siren.svg)](https://cocoapods.org/pods/Siren)  [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Accio supported](https://img.shields.io/badge/Accio-supported-0A7CF5.svg?style=flat)](https://github.com/JamitLabs/Accio) [![SwiftPM Compatible](https://img.shields.io/badge/SwiftPM-compatible-brightgreen.svg)](https://swift.org/package-manager/)
 
 ---
 
@@ -54,6 +54,8 @@ Siren is built to work with the [**Semantic Versioning**](https://semver.org/) s
 ### Future Features
 A list of future development work can be found on [Siren's Kanban Board](https://github.com/ArtSabintsev/Siren/projects/1).
 
+---
+
 ## Screenshots
 - The **left picture** forces the user to update the app.
 - The **center picture** gives the user the option to update the app.
@@ -74,13 +76,16 @@ A list of future development work can be found on [Siren's Kanban Board](https:/
    - [**Gant Laborde's Siren library**](https://github.com/GantMan/react-native-siren)
    - The Siren Swift library inspired the React Native library.
 
+---
+
 # Installation and Integration
 
 ## Installation Instructions
 
 | Swift Version |  Branch Name  | Will Continue to Receive Updates?
 | ------------- | ------------- |  -------------
-| 4.2  | master | **Yes**
+| 5.0  | master | **Yes**
+| 4.2  | swift4.2 | No
 | 4.1  | swift4.1 | No
 | 3.2  | swift3.2 | No
 | 3.1  | swift3.1 | No
@@ -88,7 +93,8 @@ A list of future development work can be found on [Siren's Kanban Board](https:/
 
 ### CocoaPods
 ```ruby
-pod 'Siren' # Swift 4.2
+pod 'Siren' # Swift 5.0
+pod 'Siren', :git => 'https://github.com/ArtSabintsev/Siren.git', :branch => 'swift4.2' # Swift 4.2
 pod 'Siren', :git => 'https://github.com/ArtSabintsev/Siren.git', :branch => 'swift4.1' # Swift 4.1
 pod 'Siren', :git => 'https://github.com/ArtSabintsev/Siren.git', :branch => 'swift3.2' # Swift 3.2
 pod 'Siren', :git => 'https://github.com/ArtSabintsev/Siren.git', :branch => 'swift3.1' # Swift 3.1
@@ -97,7 +103,8 @@ pod 'Siren', :git => 'https://github.com/ArtSabintsev/Siren.git', :branch => 'sw
 
 ### Carthage
 ```swift
-github "ArtSabintsev/Siren" // Swift 4.2
+github "ArtSabintsev/Siren" // Swift 5.0
+github "ArtSabintsev/Siren" "swift4.2" // Swift 4.2
 github "ArtSabintsev/Siren" "swift4.1" // Swift 4.1
 github "ArtSabintsev/Siren" "swift3.2" // Swift 3.2
 github "ArtSabintsev/Siren" "swift3.1" // Swift 3.1
@@ -106,7 +113,7 @@ github "ArtSabintsev/Siren" "swift2.3" // Swift 2.3
 
 ### Swift Package Manager
 ```swift
-.Package(url: "https://github.com/ArtSabintsev/Siren.git", majorVersion: 4)
+.Package(url: "https://github.com/ArtSabintsev/Siren.git", majorVersion: 5)
 ```
 
 ## Implementation Examples
@@ -131,8 +138,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 ```
 
 Siren also has plenty of customization options. All examples can be found in the Example Project's [**AppDelegate**](https://github.com/ArtSabintsev/Siren/blob/master/Example/Example/AppDelegate.swift) file. Uncomment the example you'd like to test.
- 
-**WARNING**: Siren should ONLY be placed in [UIApplication.didFinishLaunchingWithOptions](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622921-application) and only after the `window?.makeKeyAndVisible()` call. Siren initializes a listener on [didBecomeActiveNotification](https://developer.apple.com/reference/foundation/nsnotification.name/1622953-uiapplicationdidbecomeactive) to perform version checks.
+
+---
 
 # Device-Specific Checks
 
@@ -146,12 +153,14 @@ If your user's device is set to one of the supported locales, an update message 
 You may want the update dialog to *always* appear in a certain language, ignoring the user's device-specific setting. You can enable it like so:
 
 ```swift
-// In this example, we force the `russian` language.
+// In this example, we force the `Russian` language.
 Siren.shared.presentationManager = PresentationManager(forceLanguageLocalization: .russian)
 ```
 
 ## Device Compatibility
 If an app update is available, Siren checks to make sure that the version of iOS on the user's device is compatible with the one that is required by the app update. For example, if a user has iOS 11 installed on their device, but the app update requires iOS 12, an alert will not be shown. This takes care of the *false positive* case regarding app updating.
+
+---
 
 # Testing
 
@@ -162,6 +171,8 @@ If you currently don't have an app in the store, change your bundleID to one tha
 
 ## Words of Caution
 Occasionally, the iTunes JSON will update faster than the App Store CDN, meaning the JSON may state that the new version of the app has been released, while no new binary is made available for download via the App Store. It is for this reason that Siren will, by default, wait 1 day (24 hours) after the JSON has been updated to prompt the user to update. To change the default setting, please modify the value of `showAlertAfterCurrentVersionHasBeenReleasedForDays`.
+
+---
 
 # App Submission
 
@@ -175,7 +186,10 @@ In 2017, Apple announced the [ability to rollout app updates gradually (a.k.a. P
 - You can set `showAlertAfterCurrentVersionHasBeenReleasedForDays` to `7`, and Siren will not prompt any users until the latest version is 7 days old, after the phased rollout is complete.
 - You can remotely disable Siren until the rollout is done using your own API / backend logic.
 
+---
+
 # Attribution 
+
 ## Special Thanks
 A massive shout-out and thank you goes to the following folks: 
 

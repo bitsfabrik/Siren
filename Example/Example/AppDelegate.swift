@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 //        defaultExample()
         defaultExampleUsingCompletionHandler()
+//        manualExampleWithCompletionHandler()
 //        minimalCustomizationPresentationExample()
 //        forceLocalizationCustomizationPresentationExample()
 //        customMessagingPresentationExample()
@@ -51,13 +52,30 @@ private extension AppDelegate {
     /// All default rules are implemented and the
     /// results of the completion handler are returned or an error is returned.
     func defaultExampleUsingCompletionHandler() {
-        Siren.shared.wail { (results, error) in
-            if let results = results {
-                print("AlertAction ", results.alertAction)
-                print("Localization ", results.localization)
-                print("LookupModel ", results.lookupModel)
-                print("UpdateType ", results.updateType)
-            } else if let error = error {
+        Siren.shared.wail { results in
+            switch results {
+            case .success(let updateResults):
+                print("AlertAction ", updateResults.alertAction)
+                print("Localization ", updateResults.localization)
+                print("Model ", updateResults.model)
+                print("UpdateType ", updateResults.updateType)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+
+    /// Rather than waiting for `didBecomeActive` state changes (e.g., app launching/relaunching),
+    /// Siren's version checking and alert presentation methods will be triggered each time this method is called.
+    func manualExampleWithCompletionHandler() {
+        Siren.shared.wail(performCheck: .onDemand) { results in
+            switch results {
+            case .success(let updateResults):
+                print("AlertAction ", updateResults.alertAction)
+                print("Localization ", updateResults.localization)
+                print("Model ", updateResults.model)
+                print("UpdateType ", updateResults.updateType)
+            case .failure(let error):
                 print(error.localizedDescription)
             }
         }
@@ -68,13 +86,14 @@ private extension AppDelegate {
         let siren = Siren.shared
         siren.presentationManager = PresentationManager(alertTintColor: .purple,
                                                         appName: "Siren Example App Override!")
-        siren.wail { (results, error) in
-            if let results = results {
-                print("AlertAction ", results.alertAction)
-                print("Localization ", results.localization)
-                print("LookupModel ", results.lookupModel)
-                print("UpdateType ", results.updateType)
-            } else if let error = error {
+        siren.wail { results in
+            switch results {
+            case .success(let updateResults):
+                print("AlertAction ", updateResults.alertAction)
+                print("Localization ", updateResults.localization)
+                print("Model ", updateResults.model)
+                print("UpdateType ", updateResults.updateType)
+            case .failure(let error):
                 print(error.localizedDescription)
             }
         }
@@ -84,13 +103,14 @@ private extension AppDelegate {
     func forceLocalizationCustomizationPresentationExample() {
         let siren = Siren.shared
         siren.presentationManager = PresentationManager(forceLanguageLocalization: .russian)
-        siren.wail { (results, error) in
-            if let results = results {
-                print("AlertAction ", results.alertAction)
-                print("Localization ", results.localization)
-                print("LookupModel ", results.lookupModel)
-                print("UpdateType ", results.updateType)
-            } else if let error = error {
+        siren.wail { results in
+            switch results {
+            case .success(let updateResults):
+                print("AlertAction ", updateResults.alertAction)
+                print("Localization ", updateResults.localization)
+                print("Model ", updateResults.model)
+                print("UpdateType ", updateResults.updateType)
+            case .failure(let error):
                 print(error.localizedDescription)
             }
         }
@@ -101,13 +121,14 @@ private extension AppDelegate {
         let siren = Siren.shared
         siren.presentationManager = PresentationManager(alertTitle: "Update Now, OK?",
                                                         nextTimeButtonTitle: "Next time, please!?")
-        siren.wail { (results, error) in
-            if let results = results {
-                print("AlertAction ", results.alertAction)
-                print("Localization ", results.localization)
-                print("LookupModel ", results.lookupModel)
-                print("UpdateType ", results.updateType)
-            } else if let error = error {
+        siren.wail { results in
+            switch results {
+            case .success(let updateResults):
+                print("AlertAction ", updateResults.alertAction)
+                print("Localization ", updateResults.localization)
+                print("Model ", updateResults.model)
+                print("UpdateType ", updateResults.updateType)
+            case .failure(let error):
                 print(error.localizedDescription)
             }
         }
@@ -118,13 +139,14 @@ private extension AppDelegate {
         let siren = Siren.shared
         siren.rulesManager = RulesManager(globalRules: .annoying)
 
-        siren.wail { (results, error) in
-            if let results = results {
-                print("AlertAction ", results.alertAction)
-                print("Localization ", results.localization)
-                print("LookupModel ", results.lookupModel)
-                print("UpdateType ", results.updateType)
-            } else if let error = error {
+        siren.wail { results in
+            switch results {
+            case .success(let updateResults):
+                print("AlertAction ", updateResults.alertAction)
+                print("Localization ", updateResults.localization)
+                print("Model ", updateResults.model)
+                print("UpdateType ", updateResults.updateType)
+            case .failure(let error):
                 print(error.localizedDescription)
             }
         }
@@ -142,13 +164,14 @@ private extension AppDelegate {
         siren.rulesManager = RulesManager(globalRules: .critical,
                                           showAlertAfterCurrentVersionHasBeenReleasedForDays: 0)
 
-        siren.wail { (results, error) in
-            if let results = results {
-                print("AlertAction ", results.alertAction)
-                print("Localization ", results.localization)
-                print("LookupModel ", results.lookupModel)
-                print("UpdateType ", results.updateType)
-            } else if let error = error {
+        siren.wail { results in
+            switch results {
+            case .success(let updateResults):
+                print("AlertAction ", updateResults.alertAction)
+                print("Localization ", updateResults.localization)
+                print("Model ", updateResults.model)
+                print("UpdateType ", updateResults.updateType)
+            case .failure(let error):
                 print(error.localizedDescription)
             }
         }
@@ -162,13 +185,14 @@ private extension AppDelegate {
                                           patchUpdateRules: .default,
                                           revisionUpdateRules: Rules(promptFrequency: .weekly, forAlertType: .option))
 
-        siren.wail { (results, error) in
-            if let results = results {
-                print("AlertAction ", results.alertAction)
-                print("Localization ", results.localization)
-                print("LookupModel ", results.lookupModel)
-                print("UpdateType ", results.updateType)
-            } else if let error = error {
+        siren.wail { results in
+            switch results {
+            case .success(let updateResults):
+                print("AlertAction ", updateResults.alertAction)
+                print("Localization ", updateResults.localization)
+                print("Model ", updateResults.model)
+                print("UpdateType ", updateResults.updateType)
+            case .failure(let error):
                 print(error.localizedDescription)
             }
         }
@@ -183,14 +207,14 @@ private extension AppDelegate {
         let rules = Rules(promptFrequency: .immediately, forAlertType: .none)
         siren.rulesManager = RulesManager(globalRules: rules)
 
-        siren.wail { (results, error) in
-            if let results = results {
-                print("USE THE VALUES FROM THE `RESULTS` DATA STRUCTURE TO BUILD YOUR UPDATE ALERT WITH LOCALIZED STRINGS.")
-                print("AlertAction ", results.alertAction)
-                print("Localization ", results.localization)
-                print("LookupModel ", results.lookupModel)
-                print("UpdateType ", results.updateType)
-            } else if let error = error {
+        siren.wail { results in
+            switch results {
+            case .success(let updateResults):
+                print("AlertAction ", updateResults.alertAction)
+                print("Localization ", updateResults.localization)
+                print("Model ", updateResults.model)
+                print("UpdateType ", updateResults.updateType)
+            case .failure(let error):
                 print(error.localizedDescription)
             }
         }
@@ -203,13 +227,14 @@ private extension AppDelegate {
         let siren = Siren.shared
         siren.apiManager = APIManager(countryCode: "RU")
 
-        siren.wail { (results, error) in
-            if let results = results {
-                print("AlertAction ", results.alertAction)
-                print("Localization ", results.localization)
-                print("LookupModel ", results.lookupModel)
-                print("UpdateType ", results.updateType)
-            } else if let error = error {
+        siren.wail { results in
+            switch results {
+            case .success(let updateResults):
+                print("AlertAction ", updateResults.alertAction)
+                print("Localization ", updateResults.localization)
+                print("Model ", updateResults.model)
+                print("UpdateType ", updateResults.updateType)
+            case .failure(let error):
                 print(error.localizedDescription)
             }
         }
@@ -228,13 +253,14 @@ private extension AppDelegate {
                                           patchUpdateRules: .default,
                                           revisionUpdateRules: .relaxed)
 
-        siren.wail { (results, error) in
-            if let results = results {
-                print("AlertAction ", results.alertAction)
-                print("Localization ", results.localization)
-                print("LookupModel ", results.lookupModel)
-                print("UpdateType ", results.updateType)
-            } else if let error = error {
+        siren.wail { results in
+            switch results {
+            case .success(let updateResults):
+                print("AlertAction ", updateResults.alertAction)
+                print("Localization ", updateResults.localization)
+                print("Model ", updateResults.model)
+                print("UpdateType ", updateResults.updateType)
+            case .failure(let error):
                 print(error.localizedDescription)
             }
         }
