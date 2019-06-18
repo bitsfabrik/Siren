@@ -90,7 +90,7 @@ public extension Siren {
             removeForegroundObservers()
             performVersionCheck()
         case .onForeground:
-            addForegroundObservers()
+            addBackgroundObserver()
         }
 
         // Add background app state change observers.
@@ -264,7 +264,7 @@ private extension Siren {
     /// Add app state observers
     func addObservers() {
         updateForegroundObserver()
-        addBackgroundObserver()
+        addBackgroundObservers()
     }
     
     func updateForegroundObserver() {
