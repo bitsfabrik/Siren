@@ -90,7 +90,7 @@ public extension Siren {
             removeForegroundObservers()
             performVersionCheck()
         case .onForeground:
-            addBackgroundObserver()
+            addBackgroundObservers()
         }
 
         // Add background app state change observers.
